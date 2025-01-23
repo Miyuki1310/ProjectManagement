@@ -23,14 +23,14 @@ import { toggleSidebar } from "@/state";
 
 const Sidebar = () => {
   const [showProject, setShowProject] = React.useState(false);
-  const [showPriority, setShowPriority] = React.useState(true);
+  const [showPriority, setShowPriority] = React.useState(false);
   const dispatch = useDispatch();
   const { isSidebarCollapsed } = useSelector((state: any) => state.global);
 
-  const sidebarClassname = `fixed flex-col h-full justify-between shadow-xl transition-all duration-300 z-40 dark:bg-black overflow-y-auto bg-white ${!isSidebarCollapsed ? "w-0 hidden" : "w-64 flex"}`;
+  const sidebarClassname = `fixed flex flex-col h-full justify-between shadow-xl gap-8 transition-all duration-300 z-40 dark:bg-black overflow-y-auto bg-white no-scrollbar ${!isSidebarCollapsed ? "w-0" : "w-64"}`;
   return (
     <div className={sidebarClassname}>
-      <div className="flex h-full w-full flex-col">
+      <div className="flex w-full flex-col">
         {/* Logo  */}
         <div className="flex min-h-14 w-full items-center justify-between px-6">
           <p className="text-xl font-bold text-gray-800 dark:text-white">
@@ -61,22 +61,56 @@ const Sidebar = () => {
           <SidebarLink href="/user" icon={User} label="User" />
           <SidebarLink href="/team" icon={Users} label="Team" />
         </nav>
-        <button
-          className="flex items-center justify-between px-6 py-3 outline-none hover:bg-gray-200"
-          onClick={() => setShowProject(!showProject)}
-        >
-          <p className="text-md font-medium">Project</p>
-          {showProject ? <ChevronUp /> : <ChevronDown></ChevronDown>}
-        </button>
-        <button
-          className="flex items-center justify-between px-6 py-3 outline-none hover:bg-gray-200"
-          onClick={() => setShowPriority(!showPriority)}
-        >
-          <p className="text-md font-medium">Priority</p>
-          {showPriority ? <ChevronUp /> : <ChevronDown></ChevronDown>}
-        </button>
+        <div className="transition-all duration-300">
+          <button
+            className="flex w-full items-center justify-between px-6 py-3 outline-none hover:bg-gray-200 dark:hover:bg-gray-800"
+            onClick={() => setShowProject(!showProject)}
+          >
+            <p className="text-md font-medium dark:text-gray-200">Project</p>
+            {showProject ? (
+              <ChevronUp className="dark:text-gray-200" />
+            ) : (
+              <ChevronDown className="dark:text-gray-200"></ChevronDown>
+            )}
+          </button>
+          {showProject && (
+            <nav className="">
+              <SidebarLink href="/" icon={Home} label="Dashboard" />
+              <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
+              <SidebarLink href="/search" icon={Search} label="Search" />
+              <SidebarLink href="/settings" icon={Settings} label="Settings" />
+              <SidebarLink href="/user" icon={User} label="User" />
+              <SidebarLink href="/team" icon={Users} label="Team" />
+            </nav>
+          )}
+        </div>
+        <div className="">
+          <button
+            className="flex w-full items-center justify-between px-6 py-3 outline-none hover:bg-gray-200 dark:hover:bg-gray-800"
+            onClick={() => setShowPriority(!showPriority)}
+          >
+            <p className="text-md font-medium dark:text-gray-200">Priority</p>
+            {showPriority ? (
+              <ChevronUp className="dark:text-gray-200" />
+            ) : (
+              <ChevronDown className="dark:text-gray-200" />
+            )}
+          </button>
+          {showPriority && (
+            <nav className="">
+              <SidebarLink href="/" icon={Home} label="Dashboard" />
+              <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
+              <SidebarLink href="/search" icon={Search} label="Search" />
+              <SidebarLink href="/settings" icon={Settings} label="Settings" />
+              <SidebarLink href="/user" icon={User} label="User" />
+              <SidebarLink href="/team" icon={Users} label="Team" />
+            </nav>
+          )}
+        </div>
       </div>
-      <div className="">Info</div>
+      <div className="">
+        <p className="text-lg font-bold">This is our info</p>
+      </div>
     </div>
   );
 };

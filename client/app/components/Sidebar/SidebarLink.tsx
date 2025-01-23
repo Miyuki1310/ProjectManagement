@@ -25,7 +25,7 @@ const SidebarLink = ({
   return (
     <Link href={href} className="w-full">
       <div
-        className={`relative flex cursor-pointer items-center gap-2 py-4 pl-7 transition-all hover:bg-gray-200 ${isActive && "border-l-8 border-blue-300 bg-gray-100 dark:bg-gray-800"}`}
+        className={`relative flex cursor-pointer items-center gap-2 py-4 pl-7 transition-all hover:bg-gray-200 dark:hover:bg-gray-800 ${isActive && "border-l-8 border-blue-300 bg-gray-100 dark:bg-gray-800"}`}
       >
         <Icon className="h-6 w-6 text-gray-800 dark:text-gray-100"></Icon>
         <span className={`font-bold text-gray-800 dark:text-gray-100`}>
