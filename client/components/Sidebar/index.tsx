@@ -1,5 +1,6 @@
 "use client";
 import {
+  AppWindow,
   Briefcase,
   ChevronDown,
   ChevronUp,
@@ -17,6 +18,7 @@ import logo from "@/public/logo.png";
 import SidebarLink from "./SidebarLink";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/state";
+import { useGetProjectsQuery } from "@/state/api";
 // import { usePathname } from "next/navigation";
 // import { useDispatch, useSelector } from "react-redux";
 // import Link from "next/link";
@@ -24,6 +26,8 @@ import { toggleSidebar } from "@/state";
 const Sidebar = () => {
   const [showProject, setShowProject] = React.useState(false);
   const [showPriority, setShowPriority] = React.useState(false);
+  const { data: projects } = useGetProjectsQuery();
+
   const dispatch = useDispatch();
   const { isSidebarCollapsed } = useSelector((state: any) => state.global);
 
@@ -75,12 +79,16 @@ const Sidebar = () => {
           </button>
           {showProject && (
             <nav className="">
-              <SidebarLink href="/" icon={Home} label="Dashboard" />
-              <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
-              <SidebarLink href="/search" icon={Search} label="Search" />
-              <SidebarLink href="/settings" icon={Settings} label="Settings" />
-              <SidebarLink href="/user" icon={User} label="User" />
-              <SidebarLink href="/team" icon={Users} label="Team" />
+              {projects?.map((project) => {
+                return (
+                  <SidebarLink
+                    key={project.id}
+                    href={`/project/${project.id}`}
+                    label={project.name}
+                    icon={AppWindow}
+                  />
+                );
+              })}
             </nav>
           )}
         </div>
