@@ -7,5 +7,5 @@ router.get("/", (req, res) => {
   res.send("Hello World");
 });
 router.use("/projects", projectRouter);
-router.use("/task", taskRouter);
+router.use("/tasks", taskRouter);
 export default router;

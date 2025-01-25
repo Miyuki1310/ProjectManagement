@@ -67,6 +67,8 @@ class TaskController {
   updateTask = asyncWrapper(async (req: Request, res: Response) => {
     const { taskId } = req.params;
     const { status } = req.body;
+    console.log(taskId, req.body);
+
     const updatedTask = await prisma.task.update({
       where: {
         id: Number(taskId),

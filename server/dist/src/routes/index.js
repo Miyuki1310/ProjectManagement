@@ -11,5 +11,5 @@ router.get("/", (req, res) => {
     res.send("Hello World");
 });
 router.use("/projects", project_1.default);
-router.use("/task", task_1.default);
+router.use("/tasks", task_1.default);
 exports.default = router;
