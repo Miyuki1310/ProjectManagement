@@ -1,9 +1,4 @@
-import {
-  Task,
-  TaskStatus,
-  useGetTasksQuery,
-  useUpdateTaskMutation,
-} from "@/state/api";
+import { Task, useGetTasksQuery, useUpdateTaskMutation } from "@/state/api";
 import { EllipsisVertical, Plus } from "lucide-react";
 import React from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
@@ -24,7 +19,7 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
     isError,
   } = useGetTasksQuery({ projectId: Number(id) });
   console.log(tasks);
-  const [updateTaskStatus] = useUpdateTaskMutation(); // explain: the useUpdateTaskMutation hook returns a tuple with the first element being the mutation function
+  const [updateTaskStatus] = useUpdateTaskMutation(); // we must have [updateTaskStatus] to avoid infinite loop in useEffect
   const moveTask = (taskId: number, status: string) => {
     updateTaskStatus({ taskId: taskId, status: status });
   };
@@ -63,13 +58,14 @@ const TaskColumn = ({
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item: { taskId: number }) => moveTask(item.taskId, status),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collect: (monitor: any) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
-  console.log(status);
 
   const taskCounter = task.filter((t) => t.status === status).length;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const statusColor: any = {
     "To Do": "bg-red-500",
     "Work In Progress": "bg-yellow-500",
@@ -136,7 +132,7 @@ const TaskCark = ({ task }: { task: Task }) => {
   const formattedDueDate = task.dueDate
     ? format(new Date(task.dueDate), "P")
     : "";
-  const numberOfComments = task?.comments?.length || 0;
+  // const numberOfComments = task?.comments?.length || 0;
 
   const PriorityTag = ({ priority }: { priority: Task["priority"] }) => {
     return (

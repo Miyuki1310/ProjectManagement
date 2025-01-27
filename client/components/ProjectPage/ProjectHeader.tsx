@@ -7,9 +7,12 @@ import {
   Filter,
   List,
   LucideIcon,
+  PlusSquare,
   Share,
   Table,
 } from "lucide-react";
+import Modal from "../Modal";
+import ModalNewProject from "@/app/project/ModalNewProject.tsx";
 
 type Props = {
   activeTab: string;
@@ -27,8 +30,31 @@ const ProjectHeader = ({ activeTab, setActiveTab }: Props) => {
   const [modelProjectOpen, setModelProjectOpen] = React.useState(false);
   return (
     <div className="px-4 xl:px-6">
+      <Modal
+        isOpen={modelProjectOpen}
+        onClose={() => {
+          setModelProjectOpen(false);
+        }}
+        name="New Boards"
+      >
+        <ModalNewProject
+          isOpen={modelProjectOpen}
+          onClose={() => setModelProjectOpen(false)}
+        />
+      </Modal>
       <div className="py-6 lg:pb-4 lg:pt-8">
-        <Header name="Project Design Development" />
+        <Header
+          name="Project Design Development"
+          buttonComponent={
+            <button
+              className="flex items-center rounded-lg bg-blue-primary p-2 text-white"
+              onClick={() => setModelProjectOpen(true)}
+            >
+              <PlusSquare className="h-6 w-6"></PlusSquare>
+              <span className="ms-2">New Boards</span>
+            </button>
+          }
+        />
       </div>
       <div className="flex flex-wrap-reverse gap-2 border-y border-gray-200 dark:border-stroke-dark md:items-center">
         <div className="flex flex-1 items-center gap-2 md:gap-4">
@@ -84,9 +110,12 @@ const TabButton = ({
   setActiveTab,
 }: TabButtonProps) => {
   const isActive = activeTab === name;
+  console.log(activeTab, name);
+  console.log(isActive);
+
   return (
     <button
-      className={`flex items-center gap-2 rounded-lg px-3 py-4 text-gray-500 ${isActive ? "text-blue-500" : ""} outline-none hover:bg-gray-200 dark:hover:bg-gray-900`}
+      className={`flex items-center gap-2 rounded-lg px-3 py-4 ${isActive ? "text-blue-500" : "text-gray-500"} outline-none hover:bg-gray-200 dark:hover:bg-gray-900`}
       onClick={() => setActiveTab(name)}
     >
       <Icon className="h-6 w-6"></Icon>

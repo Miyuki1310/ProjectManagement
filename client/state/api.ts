@@ -7,7 +7,12 @@ export interface Project {
   startDate?: string;
   endDate?: string;
 }
-
+export interface RootState {
+  global: {
+    isSidebarCollapsed: boolean;
+    isDarkMode: boolean;
+  };
+}
 export enum TaskStatus {
   ToDo = "To Do",
   WorkInProgress = "Work In Progress",

@@ -3,6 +3,9 @@ import ProjectHeader from "@/components/ProjectPage/ProjectHeader";
 import { useParams } from "next/navigation";
 import React from "react";
 import BoardView from "../BoardView";
+import ListView from "../ListView";
+import TimeLine from "../TimeLine";
+import TableView from "../TableView";
 
 // type Props = {
 //   params: {
@@ -20,6 +23,24 @@ const ProjectPage = () => {
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === "Board" && (
         <BoardView
+          id={projectId}
+          setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+        />
+      )}
+      {activeTab === "List" && (
+        <ListView
+          id={projectId}
+          setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+        />
+      )}
+      {activeTab === "Timeline" && (
+        <TimeLine
+          id={projectId}
+          setIsModalNewTaskOpen={setIsModalNewTaskOpen}
+        />
+      )}
+      {activeTab === "Table" && (
+        <TableView
           id={projectId}
           setIsModalNewTaskOpen={setIsModalNewTaskOpen}
         />

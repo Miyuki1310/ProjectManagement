@@ -4,10 +4,11 @@ import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import StoreProvider from "@/app/redux";
 import { useSelector } from "react-redux";
+import { RootState } from "@/state/api";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { isSidebarCollapsed, isDarkMode } = useSelector(
-    (state: any) => state.global,
+    (state: RootState) => state.global,
   );
   console.log(isSidebarCollapsed, isDarkMode);
 

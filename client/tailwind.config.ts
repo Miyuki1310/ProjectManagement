@@ -44,6 +44,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      height: {
+        540: "540px",
+      },
     },
   },
   plugins: [],
