@@ -42,7 +42,10 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
     });
-    console.log(project);
+    if (project) {
+      onClose();
+      return;
+    }
   };
   return (
     <div>
