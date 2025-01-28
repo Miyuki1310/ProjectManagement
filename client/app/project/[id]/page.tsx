@@ -2,10 +2,11 @@
 import ProjectHeader from "@/components/ProjectPage/ProjectHeader";
 import { useParams } from "next/navigation";
 import React from "react";
-import BoardView from "../BoardView";
-import ListView from "../ListView";
-import TimeLine from "../TimeLine";
-import TableView from "../TableView";
+import BoardView from "@/app/project/BoardView";
+import ListView from "@/app/project/ListView";
+import TimeLine from "@/app/project/TimeLine";
+import TableView from "@/app/project/TableView";
+import ModalNewTask from "@/components/ModalNewTask";
 
 // type Props = {
 //   params: {
@@ -20,6 +21,11 @@ const ProjectPage = () => {
     React.useState<boolean>(false);
   return (
     <div>
+      <ModalNewTask
+        isOpen={isModalNewTaskOpen}
+        onClose={() => setIsModalNewTaskOpen(false)}
+        id={projectId}
+      />
       <ProjectHeader activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === "Board" && (
         <BoardView

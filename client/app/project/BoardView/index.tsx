@@ -18,7 +18,6 @@ const BoardView = ({ id, setIsModalNewTaskOpen }: BoardProps) => {
     isLoading,
     isError,
   } = useGetTasksQuery({ projectId: Number(id) });
-  console.log(tasks);
   const [updateTaskStatus] = useUpdateTaskMutation(); // we must have [updateTaskStatus] to avoid infinite loop in useEffect
   const moveTask = (taskId: number, status: string) => {
     updateTaskStatus({ taskId: taskId, status: status });

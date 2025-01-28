@@ -1,13 +1,6 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
-
-type Props = {
-  name: string;
-  label: string;
-  placeholder?: string;
-  value?: string;
-  type: string;
-};
+import { Props } from "./TextAreaInput";
 
 const FormInput = ({ name, ...props }: Props) => {
   const [field] = useField(name);
