@@ -24,9 +24,8 @@ const schema = Yup.object({
   endDate: Yup.date().required("End date is required"),
 });
 
-const ModalNewProject = ({ isOpen, onClose }: Props) => {
+const ModalNewProject = ({ onClose }: Props) => {
   const [createProject, { isLoading, isError }] = useCreateProjectMutation();
-  console.log(createProject);
 
   const handleSubmit = async (values: InputType) => {
     const { projectName, description, startDate, endDate } = values;
@@ -81,10 +80,11 @@ const ModalNewProject = ({ isOpen, onClose }: Props) => {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-primary p-2 font-bold text-white"
+            className={`w-full rounded-lg bg-blue-primary p-2 font-bold text-white ${isLoading ? "opacity-50" : ""}`}
           >
-            Create new project
+            {isLoading ? "Creating task..." : "Create new task"}
           </button>
+          {isError && <div className="text-red-500">Error creating task</div>}
         </Form>
       </Formik>
     </div>

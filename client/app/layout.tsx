@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "gantt-task-react/dist/index.css";
 import DashboardWrapper from "./dashboardWrapper";
 
 const geistSans = Geist({
