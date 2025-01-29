@@ -21,7 +21,7 @@ const TimeLine = () => {
         end: new Date(project.endDate as string),
         name: project.name,
         id: `Project-${project.id}`,
-        type: "task" as TaskTypeItems,
+        type: "project" as TaskTypeItems,
         progress: 50,
         isDisabled: false,
       })) || []

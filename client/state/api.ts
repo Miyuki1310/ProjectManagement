@@ -31,7 +31,6 @@ export enum TaskPriority {
 export interface User {
   userId?: number;
   username: string;
-  email: string;
   cognitoId?: string;
   profilePictureUrl?: string;
   teamId?: number;
@@ -64,9 +63,15 @@ export interface Task {
   comments?: Comment[];
   attachments?: Attachment[];
 }
+
+export interface Search {
+  tasks: Task[];
+  projects: Project[];
+  users: User[];
+}
 export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
-  reducerPath: "api",
+  reducerPath: "fetchApi",
   tagTypes: ["Projects", "Tasks"],
   endpoints: (builder) => ({
     getProjects: builder.query<Project[], void>({
@@ -106,6 +111,9 @@ export const api = createApi({
         { type: "Tasks", taskId },
       ],
     }),
+    search: builder.query<Search, { query: string }>({
+      query: ({ query }) => `search?query=${query}`,
+    }),
   }),
 });
 
@@ -116,4 +124,5 @@ export const {
   useGetTasksQuery,
   useCreateTaskMutation,
   useUpdateTaskMutation,
+  useSearchQuery,
 } = api;

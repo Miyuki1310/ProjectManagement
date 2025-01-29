@@ -14,6 +14,8 @@ const ListView = ({ id, setIsModalNewTaskOpen }: ListProps) => {
     isLoading,
     isError,
   } = useGetTasksQuery({ projectId: Number(id) });
+  console.log(tasks);
+
   if (isLoading) return <div className="text-xl font-bold">Loading...</div>;
   if (isError) return <div className="text-xl font-bold">Error</div>;
 
