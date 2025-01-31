@@ -120,6 +120,13 @@ export const api = createApi({
         { type: "Tasks", taskId },
       ],
     }),
+    getTasksByUser: builder.query<Task[], number>({
+      query: (userId) => `tasks/${userId}`,
+      providesTags: (result, error, userId) =>
+        result
+          ? result.map(({ id }) => ({ type: "Tasks", id }))
+          : [{ type: "Tasks", id: userId }],
+    }),
     search: builder.query<Search, { query: string }>({
       query: ({ query }) => `search?query=${query}`,
     }),
@@ -144,4 +151,5 @@ export const {
   useSearchQuery,
   useGetUsersQuery,
   useGetTeamsQuery,
+  useGetTasksByUserQuery,
 } = api;
