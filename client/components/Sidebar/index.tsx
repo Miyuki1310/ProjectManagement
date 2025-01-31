@@ -18,10 +18,7 @@ import logo from "@/public/logo.png";
 import SidebarLink from "./SidebarLink";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/state";
-import { useGetProjectsQuery } from "@/state/api";
-// import { usePathname } from "next/navigation";
-// import { useDispatch, useSelector } from "react-redux";
-// import Link from "next/link";
+import { RootState, useGetProjectsQuery } from "@/state/api";
 
 const Sidebar = () => {
   const [showProject, setShowProject] = React.useState(false);
@@ -29,7 +26,9 @@ const Sidebar = () => {
   const { data: projects } = useGetProjectsQuery();
 
   const dispatch = useDispatch();
-  const { isSidebarCollapsed } = useSelector((state: any) => state.global);
+  const { isSidebarCollapsed } = useSelector(
+    (state: RootState) => state.global,
+  );
 
   const sidebarClassname = `fixed flex flex-col h-full justify-between shadow-xl gap-8 transition-all duration-300 z-40 dark:bg-black overflow-y-auto bg-white no-scrollbar ${!isSidebarCollapsed ? "w-0" : "w-64"}`;
   return (
@@ -62,8 +61,8 @@ const Sidebar = () => {
           <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
           <SidebarLink href="/search" icon={Search} label="Search" />
           <SidebarLink href="/settings" icon={Settings} label="Settings" />
-          <SidebarLink href="/user" icon={User} label="User" />
-          <SidebarLink href="/team" icon={Users} label="Team" />
+          <SidebarLink href="/users" icon={User} label="User" />
+          <SidebarLink href="/teams" icon={Users} label="Team" />
         </nav>
         <div className="transition-all duration-300">
           <button
@@ -110,8 +109,8 @@ const Sidebar = () => {
               <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
               <SidebarLink href="/search" icon={Search} label="Search" />
               <SidebarLink href="/settings" icon={Settings} label="Settings" />
-              <SidebarLink href="/user" icon={User} label="User" />
-              <SidebarLink href="/team" icon={Users} label="Team" />
+              <SidebarLink href="/users" icon={User} label="User" />
+              <SidebarLink href="/teams" icon={Users} label="Team" />
             </nav>
           )}
         </div>
