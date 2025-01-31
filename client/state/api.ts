@@ -121,7 +121,7 @@ export const api = createApi({
       ],
     }),
     getTasksByUser: builder.query<Task[], number>({
-      query: (userId) => `tasks/${userId}`,
+      query: (userId) => `tasks/user/${userId}`,
       providesTags: (result, error, userId) =>
         result
           ? result.map(({ id }) => ({ type: "Tasks", id }))

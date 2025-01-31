@@ -10,7 +10,7 @@ type Props = {
   setIsModalNewTaskOpen: (isOpen: boolean) => void;
 };
 
-const columns: GridColDef[] = [
+export const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 70 },
   {
     field: "title",

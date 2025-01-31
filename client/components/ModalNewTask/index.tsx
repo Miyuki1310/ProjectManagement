@@ -32,7 +32,7 @@ const schema = Yup.object({
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  id: string | null;
+  id?: string | null;
 };
 
 interface InputType {
@@ -45,6 +45,7 @@ interface InputType {
   dueDate: string;
   authorUserId: string;
   assignedUserId: string;
+  projectId: number | string;
 }
 
 const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
@@ -60,6 +61,7 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
       dueDate,
       authorUserId,
       assignedUserId,
+      projectId,
     } = values;
     const formattedStartDate = formatISO(new Date(startDate), {
       representation: "date",
@@ -77,7 +79,7 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
       dueDate: formattedEndDate,
       authorUserId: Number(authorUserId),
       assignedUserId: Number(assignedUserId),
-      projectId: Number(id),
+      projectId: id == null ? Number(projectId) : Number(id),
     });
     if (tasks) {
       onClose();
@@ -100,6 +102,7 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
           dueDate: format(new Date(), "yyyy-MM-dd"),
           authorUserId: "",
           assignedUserId: "",
+          projectId: id || "",
         }}
         onSubmit={handleSubmit}
       >
@@ -116,28 +119,32 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
             type="text"
             placeholder="Enter your description"
           ></TextAreaInput>
-          <SelectInput
-            options={[...Object.values(TaskStatus)]}
-            name="status"
-            label="Choose status"
-          />
-          <SelectInput
-            options={[...Object.values(TaskPriority)]}
-            name="priority"
-            label="Choose priority"
-          />
+          <div className="flex gap-2">
+            <SelectInput
+              options={[...Object.values(TaskStatus)]}
+              name="status"
+              label="Choose status"
+            />
+            <SelectInput
+              options={[...Object.values(TaskPriority)]}
+              name="priority"
+              label="Choose priority"
+            />
+          </div>
           <FormInput
             name="tags"
             placeholder="Enter your tags"
             type="text"
             label="Enter tags"
           />
-          <FormInput
-            label="Start Date"
-            name="startDate"
-            type="date"
-          ></FormInput>
-          <FormInput label="End Date" name="dueDate" type="date"></FormInput>
+          <div className="flex gap-2">
+            <FormInput
+              label="Start Date"
+              name="startDate"
+              type="date"
+            ></FormInput>
+            <FormInput label="End Date" name="dueDate" type="date"></FormInput>
+          </div>
 
           <FormInput
             label="Enter author ID"
@@ -148,6 +155,12 @@ const ModalNewTask = ({ isOpen, onClose, id = null }: Props) => {
             label="Enter Assignee ID"
             placeholder="Assignee User ID"
             name="assignedUserId"
+          />
+
+          <FormInput
+            label="Project ID"
+            name="projectId"
+            placeholder="Enter project id"
           />
 
           <button

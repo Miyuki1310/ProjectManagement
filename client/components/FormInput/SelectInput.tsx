@@ -5,14 +5,14 @@ import { ErrorMessage, useField } from "formik";
 const SelectInput = ({ name, options, ...props }: Props) => {
   const [field] = useField(name);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <label htmlFor={name} className="font-semibold dark:text-white">
         {props.label}
       </label>
       <select
         {...props}
         {...field}
-        className="w-full rounded-lg border p-2 outline-none hover:text-gray-200 dark:cursor-pointer dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+        className="w-full rounded-lg border p-2 outline-none hover:cursor-pointer hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
       >
         {options?.map((option) => {
           return (

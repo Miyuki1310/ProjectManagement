@@ -5,7 +5,7 @@ import { Props } from "./TextAreaInput";
 const FormInput = ({ name, ...props }: Props) => {
   const [field] = useField(name);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-1 flex-col gap-2">
       <label htmlFor={name} className="font-semibold dark:text-white">
         {props.label}
       </label>

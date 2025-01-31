@@ -51,7 +51,7 @@ const Users = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError || !users) return <div>Error</div>;
   return (
-    <div className="mx-auto flex w-min flex-col p-8 md:w-1/2 lg:w-1/3">
+    <div className="mx-auto flex w-min flex-col p-8 md:w-1/2">
       <Header name="Users" />
       <div className="" style={{ width: "100%" }}>
         <DataGrid

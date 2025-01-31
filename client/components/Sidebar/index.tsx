@@ -1,13 +1,17 @@
 "use client";
 import {
   AppWindow,
+  BatteryMedium,
+  BookCheck,
   Briefcase,
   ChevronDown,
   ChevronUp,
+  Highlighter,
   Home,
   Lock,
   Search,
   Settings,
+  ShieldAlert,
   User,
   Users,
   X,
@@ -105,12 +109,27 @@ const Sidebar = () => {
           </button>
           {showPriority && (
             <nav className="">
-              <SidebarLink href="/" icon={Home} label="Dashboard" />
-              <SidebarLink href="/timeline" icon={Briefcase} label="Timeline" />
-              <SidebarLink href="/search" icon={Search} label="Search" />
-              <SidebarLink href="/settings" icon={Settings} label="Settings" />
-              <SidebarLink href="/users" icon={User} label="User" />
-              <SidebarLink href="/teams" icon={Users} label="Team" />
+              <SidebarLink
+                href="/priority/urgent"
+                icon={ShieldAlert}
+                label="Urgent"
+              />
+              <SidebarLink href="/priority/low" icon={Briefcase} label="Low" />
+              <SidebarLink
+                href="/priority/backlog"
+                icon={BookCheck}
+                label="Back log"
+              />
+              <SidebarLink
+                href="/priority/high"
+                icon={Highlighter}
+                label="High"
+              />
+              <SidebarLink
+                href="/priority/medium"
+                icon={BatteryMedium}
+                label="Medium"
+              />
             </nav>
           )}
         </div>
