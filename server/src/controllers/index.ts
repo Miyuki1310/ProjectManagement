@@ -1,5 +1,12 @@
 import projectController from "./project";
 import taskController from "./task";
 import searchController from "./search";
-
-export { projectController, taskController, searchController };
+import userController from "./user";
+import teamController from "./team";
+export {
+  projectController,
+  taskController,
+  searchController,
+  userController,
+  teamController,
+};

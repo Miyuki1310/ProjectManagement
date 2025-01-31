@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import bodyParser from "body-parser";
 import router from "./routes";
 import notFound from "./middlewares/not-found";
 import handleError from "./middlewares/handleError";
