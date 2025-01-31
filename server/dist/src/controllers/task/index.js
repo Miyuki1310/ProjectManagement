@@ -75,6 +75,25 @@ class TaskController {
             }
             return res.status(200).json(updatedTask);
         }));
+        this.getUserTasks = (0, asyncWrapper_1.default)((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId } = req.params;
+            const tasks = yield prisma.task.findMany({
+                where: {
+                    OR: [
+                        { authorUserId: Number(userId) },
+                        { assignedUserId: Number(userId) },
+                    ],
+                },
+                include: {
+                    assignee: true,
+                    author: true,
+                },
+            });
+            if (!tasks) {
+                throw new errors_1.CustomApiError("No tasks found", 404);
+            }
+            return res.status(200).json(tasks);
+        }));
     }
 }
 const taskController = new TaskController();

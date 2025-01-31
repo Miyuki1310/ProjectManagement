@@ -82,6 +82,26 @@ class TaskController {
     }
     return res.status(200).json(updatedTask);
   });
+
+  getUserTasks = asyncWrapper(async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    const tasks = await prisma.task.findMany({
+      where: {
+        OR: [
+          { authorUserId: Number(userId) },
+          { assignedUserId: Number(userId) },
+        ],
+      },
+      include: {
+        assignee: true,
+        author: true,
+      },
+    });
+    if (!tasks) {
+      throw new CustomApiError("No tasks found", 404);
+    }
+    return res.status(200).json(tasks);
+  });
 }
 
 const taskController = new TaskController();
