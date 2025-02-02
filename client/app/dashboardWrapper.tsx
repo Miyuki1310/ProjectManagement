@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import StoreProvider from "@/app/redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state/api";
+import AuthProvider from "./authProvider";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { isSidebarCollapsed, isDarkMode } = useSelector(
@@ -37,7 +38,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 const DashboardWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <StoreProvider>
-      <DashboardLayout>{children}</DashboardLayout>
+      <AuthProvider>
+        <DashboardLayout>{children}</DashboardLayout>
+      </AuthProvider>
     </StoreProvider>
   );
 };
