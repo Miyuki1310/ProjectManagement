@@ -6,7 +6,7 @@ import { toggleDarkMode, toggleSidebar } from "@/state";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { isSidebarCollapsed } = useSelector((state: any) => state.global);
+  const { isSidebarCollapsed } = useSelector((state: any) => state.global); // eslint-disable-line @typescript-eslint/no-explicit-any
   return (
     <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-black">
       {/* SearchBar */}
