@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import logo from "@/public/logo.png";
 import SidebarLink from "./SidebarLink";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/state";
@@ -51,7 +50,12 @@ const Sidebar = () => {
           ></X>
         </div>
         <div className="flex items-center gap-4 border-y px-6 py-4 dark:border-gray-800">
-          <Image width={30} height={30} src={logo} alt="logo" />
+          <Image
+            width={30}
+            height={30}
+            src="https://pm-3s-images.s3.us-east-1.amazonaws.com/logo.png"
+            alt="logo"
+          />
           <p className="text-md flex flex-col font-bold tracking-wide dark:text-gray-200">
             Miyuki Team
             <span className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
