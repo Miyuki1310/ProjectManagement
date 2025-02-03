@@ -12,6 +12,19 @@ class UserController {
     return res.status(200).json(users);
   });
 
+  getUser = asyncWrapper(async (req: Request, res: Response) => {
+    const { cognitoId } = req.params;
+    const user = await prisma.user.findUnique({
+      where: {
+        cognitoId,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json(user);
+  });
+
   createUser = asyncWrapper(async (req: Request, res: Response) => {
     const {
       username,
