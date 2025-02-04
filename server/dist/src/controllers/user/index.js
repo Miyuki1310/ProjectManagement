@@ -24,6 +24,33 @@ class UserController {
             }
             return res.status(200).json(users);
         }));
+        this.getUser = (0, asyncWrapper_1.default)((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { cognitoId } = req.params;
+            const user = yield prisma.user.findUnique({
+                where: {
+                    cognitoId,
+                },
+            });
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            return res.status(200).json(user);
+        }));
+        this.createUser = (0, asyncWrapper_1.default)((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { username, cognitoId, profilePictureUrl = "i1.jpg", teamId = 1, } = req.body;
+            const newUser = yield prisma.user.create({
+                data: {
+                    username,
+                    cognitoId,
+                    profilePictureUrl,
+                    teamId,
+                },
+            });
+            if (!newUser) {
+                return res.status(400).json({ message: "User not created" });
+            }
+            return res.status(201).json(newUser);
+        }));
     }
 }
 const userController = new UserController();

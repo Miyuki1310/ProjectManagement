@@ -22,7 +22,7 @@ app.use(express_1.default.urlencoded({ extended: false })); // parse the request
 app.use("/api", routes_1.default);
 app.use(not_found_1.default);
 app.use(handleError_1.default);
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
+const port = Number(process.env.PORT) || 5000;
+app.listen(port, "0.0.0.0", () => {
     console.log(`Server is running on port ${port}`);
 });
