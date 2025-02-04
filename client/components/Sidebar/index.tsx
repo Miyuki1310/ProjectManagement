@@ -22,6 +22,8 @@ import SidebarLink from "./SidebarLink";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "@/state";
 import { RootState, useGetProjectsQuery } from "@/state/api";
+import { signOut } from "aws-amplify/auth";
+import { useGetAuthUserQuery } from "@/state/api";
 
 const Sidebar = () => {
   const [showProject, setShowProject] = React.useState(false);
@@ -32,6 +34,18 @@ const Sidebar = () => {
   const { isSidebarCollapsed } = useSelector(
     (state: RootState) => state.global,
   );
+
+  const { data: currentUser } = useGetAuthUserQuery({});
+  console.log(currentUser?.accessToken);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Error signing out", error);
+    }
+  };
+  const userDetail = currentUser?.userDetail;
 
   const sidebarClassname = `fixed flex flex-col h-full justify-between shadow-xl gap-8 transition-all duration-300 z-40 dark:bg-black overflow-y-auto bg-white no-scrollbar ${!isSidebarCollapsed ? "w-0" : "w-64"}`;
   return (
@@ -139,7 +153,30 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="">
-        <p className="text-lg font-bold">This is our info</p>
+        <div className="hidden items-center justify-between md:flex">
+          <div className="align-center flex h-9 w-9 justify-center">
+            {!!userDetail?.profilePictureUrl ? (
+              <Image
+                src={`https://pm-3s-images.s3.us-east-1.amazonaws.com/${userDetail.profilePictureUrl}`}
+                alt="profile"
+                className="h-full rounded-full"
+                width={100}
+                height={50}
+              />
+            ) : (
+              <User className="h-6 w-6 cursor-pointer self-center rounded-full dark:text-white"></User>
+            )}
+          </div>
+          <span className="mx-3 text-gray-800 dark:text-white">
+            {userDetail?.username}
+          </span>
+          <button
+            className="hover-bg-blue-500 md-block hidden rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white"
+            onClick={handleSignOut}
+          >
+            Signout
+          </button>
+        </div>
       </div>
     </div>
   );

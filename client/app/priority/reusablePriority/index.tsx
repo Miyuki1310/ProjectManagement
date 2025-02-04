@@ -4,7 +4,12 @@ import ModalNewTask from "@/components/ModalNewTask";
 import Header from "@/components/ProjectPage/Header";
 import TaskCard from "@/components/TaskCard";
 import { dataGridClassName, dataGridSxStyles } from "@/lib/utils";
-import { RootState, TaskPriority, useGetTasksByUserQuery } from "@/state/api";
+import {
+  RootState,
+  TaskPriority,
+  useGetAuthUserQuery,
+  useGetTasksByUserQuery,
+} from "@/state/api";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -16,12 +21,13 @@ type Props = {
 const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = React.useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = React.useState(false);
-  const userId = "1";
+  const { data: currentUser } = useGetAuthUserQuery({});
+  const userId = currentUser?.userDetail?.userId || null;
   const {
     data: tasks,
     isLoading,
     isError,
-  } = useGetTasksByUserQuery(Number(userId), { skip: userId === null });
+  } = useGetTasksByUserQuery(userId || 0, { skip: userId === null });
   const { isDarkMode } = useSelector((state: RootState) => state.global);
 
   const filteredTasks =

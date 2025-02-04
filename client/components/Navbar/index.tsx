@@ -1,11 +1,26 @@
 import React from "react";
-import { Menu, Moon, Search, Settings } from "lucide-react";
+import { Menu, Moon, Search, Settings, User } from "lucide-react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleDarkMode, toggleSidebar } from "@/state";
+import { signOut } from "aws-amplify/auth";
+import { useGetAuthUserQuery } from "@/state/api";
+import Image from "next/image";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const { data: currentUser } = useGetAuthUserQuery({});
+  console.log(currentUser?.accessToken);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Error signing out", error);
+    }
+  };
+  const userDetail = currentUser?.userDetail;
+
   const { isSidebarCollapsed } = useSelector((state: any) => state.global); // eslint-disable-line @typescript-eslint/no-explicit-any
   return (
     <div className="flex items-center justify-between bg-white px-4 py-3 dark:bg-black">
@@ -42,7 +57,31 @@ const Navbar = () => {
         >
           <Settings className="h-6 w-6 cursor-pointer dark:text-white" />
         </Link>
-        <div className=""></div>
+        <div className="ml-2 mr-5 hidden min-h-[2em] w-[0.1rem] bg-gray-200 md:inline-block"></div>
+        <div className="hidden items-center justify-between md:flex">
+          <div className="align-center flex h-9 w-9 justify-center">
+            {!!userDetail?.profilePictureUrl ? (
+              <Image
+                src={`https://pm-3s-images.s3.us-east-1.amazonaws.com/${userDetail.profilePictureUrl}`}
+                alt="profile"
+                className="h-full rounded-full"
+                width={100}
+                height={50}
+              />
+            ) : (
+              <User className="h-6 w-6 cursor-pointer self-center rounded-full dark:text-white"></User>
+            )}
+          </div>
+          <span className="mx-3 text-gray-800 dark:text-white">
+            {userDetail?.username}
+          </span>
+          <button
+            className="hover-bg-blue-500 hidden rounded bg-blue-400 px-4 py-2 text-lg font-bold text-white md:block"
+            onClick={handleSignOut}
+          >
+            Signout
+          </button>
+        </div>
       </div>
     </div>
   );

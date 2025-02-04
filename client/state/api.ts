@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
 
 export interface Project {
   id: number;
@@ -79,10 +80,38 @@ export interface Team {
   projectManagerUsername?: string;
 }
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    prepareHeaders: async (header) => {
+      const session = await fetchAuthSession();
+      const accessToken = session?.tokens?.accessToken ?? {};
+      if (accessToken) {
+        header.set("Authorization", `Bearer ${accessToken}`);
+      }
+      return header;
+    },
+  }),
   reducerPath: "fetchApi",
   tagTypes: ["Projects", "Tasks", "Users", "Teams"],
   endpoints: (builder) => ({
+    getAuthUser: builder.query({
+      queryFn: async (args, api, extraOptions, baseQuery) => {
+        try {
+          const user = await getCurrentUser();
+          const sessions = await fetchAuthSession();
+          if (!sessions) throw new Error("No session found");
+          const { userSub } = sessions;
+          const { accessToken } = sessions.tokens ?? {};
+
+          const userDetailResponse = await baseQuery(`/users/${userSub}`);
+          const userDetail = userDetailResponse.data as User;
+          return { data: { userDetail, user, accessToken } };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+          return { error: error.message };
+        }
+      },
+    }),
     getProjects: builder.query<Project[], void>({
       query: () => "projects",
       providesTags: ["Projects"],
@@ -152,4 +181,5 @@ export const {
   useGetUsersQuery,
   useGetTeamsQuery,
   useGetTasksByUserQuery,
+  useGetAuthUserQuery,
 } = api;
