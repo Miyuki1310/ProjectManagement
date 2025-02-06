@@ -37,7 +37,7 @@ class UserController {
     const newUser = await prisma.user.create({
       data: {
         username,
-        cognitoId,
+        cognitoId: cognitoId as string,
         profilePictureUrl,
         teamId,
       },
