@@ -32,6 +32,8 @@ class UserController {
       profilePictureUrl = "i1.jpg",
       teamId = 1,
     } = req.body;
+    console.log(cognitoId);
+
     const newUser = await prisma.user.create({
       data: {
         username,
@@ -40,7 +42,6 @@ class UserController {
         teamId,
       },
     });
-    console.log("Hello");
 
     if (!newUser) {
       return res.status(400).json({ message: "User not created" });
