@@ -22,6 +22,8 @@ const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = React.useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = React.useState(false);
   const { data: currentUser } = useGetAuthUserQuery({});
+  console.log(currentUser);
+
   const userId = currentUser?.userDetail?.userId || 1;
   const {
     data: tasks,
