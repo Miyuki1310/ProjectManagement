@@ -22,12 +22,12 @@ const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = React.useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = React.useState(false);
   const { data: currentUser } = useGetAuthUserQuery({});
-  const userId = currentUser?.userDetail?.userId || null;
+  const userId = currentUser?.userDetail?.userId || 1;
   const {
     data: tasks,
     isLoading,
     isError,
-  } = useGetTasksByUserQuery(userId || 0, { skip: userId === null });
+  } = useGetTasksByUserQuery(userId || 1, { skip: userId === null });
   const { isDarkMode } = useSelector((state: RootState) => state.global);
 
   const filteredTasks =
