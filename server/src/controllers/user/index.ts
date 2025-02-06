@@ -16,7 +16,7 @@ class UserController {
     const { cognitoId } = req.params;
     const user = await prisma.user.findUnique({
       where: {
-        cognitoId,
+        cognitoId: cognitoId as string,
       },
     });
     if (!user) {
@@ -40,6 +40,8 @@ class UserController {
         teamId,
       },
     });
+    console.log("Hello");
+
     if (!newUser) {
       return res.status(400).json({ message: "User not created" });
     }
