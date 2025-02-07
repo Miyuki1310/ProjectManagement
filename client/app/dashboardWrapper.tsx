@@ -11,8 +11,6 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const { isSidebarCollapsed, isDarkMode } = useSelector(
     (state: RootState) => state.global,
   );
-  console.log(isSidebarCollapsed, isDarkMode);
-
   React.useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
@@ -26,7 +24,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       {/* {sidebar} */}
       <Sidebar />
       <main
-        className={`flex w-full flex-col bg-gray-50 text-gray-900 transition-all duration-300 dark:bg-dark-bg ${isSidebarCollapsed && "pl-64"}`}
+        className={`flex w-full flex-col bg-gray-50 text-gray-900 transition-all duration-300 dark:bg-dark-bg ${isSidebarCollapsed && "md:pl-64"}`}
       >
         <Navbar />
         {children}
